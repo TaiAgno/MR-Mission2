@@ -28,6 +28,8 @@ I have very limited experience with JavaScript, and using Node, JSON and Express
 * npm install dotenv
 * npm install node-fetch
 * npm install esm
+* npm install cors
+
 
 ### Executing program
 

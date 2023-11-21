@@ -1,4 +1,5 @@
 require('dotenv').config();
+const cors = require('cors');
 const util = require('util');
 const fs = require('fs');
 const msRest = require("@azure/ms-rest-js");
@@ -28,6 +29,7 @@ const multer = require('multer');
 const FormData = require('form-data');
 
 const server = express();
+server.use(cors());
 const upload = multer({ dest: 'uploads/' });
 
 var carImages = {
@@ -36,6 +38,8 @@ var carImages = {
     "hatchback": "https://trademe.tmcdn.co.nz/photoserver/plus/2063636499.jpg",
     "convertible": "https://trademe.tmcdn.co.nz/photoserver/full/2080526602.jpg"
 };
+
+console.log("Script loaded");
 
 server.post('/upload', upload.single('image'), async (req, res) => {
     if (!req.file) {
@@ -64,15 +68,34 @@ server.post('/upload', upload.single('image'), async (req, res) => {
     }
 });
 
+// Assuming you have an HTML element with id="result"
 function matchImageWithPrediction(prediction) {
-    // Your custom matching logic goes here
+    if (!prediction.predictions || prediction.predictions.length === 0) {
+        console.error("No predictions found in the response.");
+        return { error: "No predictions found" };
+    }
+
+    // Find the prediction with the highest probability
     const highestProbabilityPrediction = prediction.predictions.reduce((prev, current) => {
         return (prev.probability > current.probability) ? prev : current;
     });
 
+    // Check if 'tagName' is available
+    if (!highestProbabilityPrediction.tagName) {
+        console.error("No 'tagName' found in the prediction.");
+        return { error: "No 'tagName' found in the prediction" };
+    }
+
+    // Check if the tagName is in your carImages
+    const tagName = highestProbabilityPrediction.tagName.toLowerCase();
+    if (!carImages[tagName]) {
+        console.error(`No matching image found for tagName: ${tagName}`);
+        return { error: `No matching image found for tagName: ${tagName}` };
+    }
+
     return {
-        tagName: highestProbabilityPrediction.tagName,
-        imageUrl: carImages[highestProbabilityPrediction.tagName],
+        tagName: tagName,
+        imageUrl: carImages[tagName],
         ...prediction
     };
 }

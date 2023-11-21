@@ -10,48 +10,54 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
-
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 		<script src="assets/js/jquery.min.js"></script>
 		<script src="assets/js/jquery.dropotron.min.js"></script>
 		<script src="assets/js/browser.min.js"></script>
 		<script src="assets/js/breakpoints.min.js"></script>
 		<script src="assets/js/util.js"></script>
 		<script src="assets/js/main.js"></script>
-		<script src="upload.js"></script>
 
-		<script>
-			$(document).ready(function() {
-				console.log("upload.js loaded"); 
-			
-				$("#uploadForm").submit(function(e) {
-					e.preventDefault();
-					console.log("Form submitted"); // Debug statement 1
-			
-					var file = $('#fileInput')[0].files[0];
-					console.log(file); // Debug statement 2
-			
-					var formData = new FormData();
-					formData.append('image', file);
-			
-					$.ajax({
-						url: '/upload',
-						type: 'POST',
-						data: formData,
-						success: function (data) {
-							var carType = data.prediction.tagName;
+	<script>
+        $(document).ready(function () {
+            console.log("upload.js loaded");
+
+            $("#uploadForm").submit(function (e) {
+                e.preventDefault();
+                console.log("Form submitted");
+
+                var file = $('#fileInput')[0].files[0];
+                console.log(file);
+
+                var formData = new FormData();
+                formData.append('image', file);
+
+                $.ajax({
+                    url: 'http://localhost:3000/upload',
+                    type: 'POST',
+                    data: formData,
+					success: function (data) {
+						console.log("Success! Received data:", data);
+
+						if (data.error) {
+							console.error("Error in response:", data.error);
+						} else {
+							var carType = data.tagName;
 							var imageUrl = data.imageUrl;
 							$("#result").html('<img src="' + imageUrl + '" alt="' + carType + '">');
-						},
-						cache: false,
-						contentType: false,
-						processData: false,
-						error: function(jqXHR, textStatus, errorThrown) {
-							console.error("AJAX error: " + textStatus + ' : ' + errorThrown); // Debug statement 4
 						}
-					});
-				});
-			});
-			</script>
+					},
+
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error("AJAX error: " + textStatus + ' : ' + errorThrown);
+                    }
+                });
+            });
+        });
+    </script>
 
 	</head>
 	<body class="is-preload">
@@ -67,25 +73,7 @@
 						<nav id="nav">
 							<ul>
 								<li><a href="#">Home</a></li>
-								<li>
-									<a href="#">Our Cars</a>
-									<ul>
-										<li><a href="#">Lorem dolor</a></li>
-										<li><a href="#">Magna phasellus</a></li>
-										<li><a href="#">Etiam sed tempus</a></li>
-										<li>
-											<a href="#">Submenu</a>
-											<ul>
-												<li><a href="#">Lorem dolor</a></li>
-												<li><a href="#">Phasellus magna</a></li>
-												<li><a href="#">Magna phasellus</a></li>
-												<li><a href="#">Etiam nisl</a></li>
-												<li><a href="#">Veroeros feugiat</a></li>
-											</ul>
-										</li>
-										<li><a href="#">Veroeros feugiat</a></li>
-									</ul>
-								</li>
+								<li><a href="#">Our Cars</a></li>
 								<li class="current"><a href="index.html">Find Your New Car</a></li>
 								<li><a href="#">Insurance</a></li>
 								<li><a href="#">About Us</a></li>
@@ -125,30 +113,6 @@
 				<div id="footer">
 					<div class="container">
 						<div class="row">
-							<section class="col-3 col-6-narrower col-12-mobilep">
-								<h3>Links to Stuff</h3>
-								<ul class="links">
-									<li><a href="#">Mattis et quis rutrum</a></li>
-									<li><a href="#">Suspendisse amet varius</a></li>
-									<li><a href="#">Sed et dapibus quis</a></li>
-									<li><a href="#">Rutrum accumsan dolor</a></li>
-									<li><a href="#">Mattis rutrum accumsan</a></li>
-									<li><a href="#">Suspendisse varius nibh</a></li>
-									<li><a href="#">Sed et dapibus mattis</a></li>
-								</ul>
-							</section>
-							<section class="col-3 col-6-narrower col-12-mobilep">
-								<h3>More Links to Stuff</h3>
-								<ul class="links">
-									<li><a href="#">Duis neque nisi dapibus</a></li>
-									<li><a href="#">Sed et dapibus quis</a></li>
-									<li><a href="#">Rutrum accumsan sed</a></li>
-									<li><a href="#">Mattis et sed accumsan</a></li>
-									<li><a href="#">Duis neque nisi sed</a></li>
-									<li><a href="#">Sed et dapibus quis</a></li>
-									<li><a href="#">Rutrum amet varius</a></li>
-								</ul>
-							</section>
 							<section class="col-6 col-12-narrower">
 								<h3>Get In Touch</h3>
 								<form>
