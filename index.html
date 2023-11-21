@@ -32,19 +32,30 @@
                 var formData = new FormData();
                 formData.append('image', file);
 
+
+
                 $.ajax({
                     url: 'http://localhost:3000/upload',
                     type: 'POST',
                     data: formData,
 					success: function (data) {
 						console.log("Success! Received data:", data);
-
+						var carType = data.carType;
+						var imageUrl = data.imageUrl;
+						var carTag = data.carTag;
+						var url = data.url;
+						var comment = data.comment;
 						if (data.error) {
 							console.error("Error in response:", data.error);
+							$("result").html("Sorry, no matches were found.");
 						} else {
-							var carType = data.tagName;
-							var imageUrl = data.imageUrl;
-							$("#result").html('<img src="' + imageUrl + '" alt="' + carType + '">');
+							$("#result").html(`
+								<p>Match: ${carTag}
+								<br>Comment: ${comment}
+								<br>More info: <a href="${url}" target="_blank">${url}</a></p>
+								<p><img src="${imageUrl}" alt="${carType}"></p>
+								
+							`);
 						}
 					},
 
@@ -58,8 +69,8 @@
             });
         });
     </script>
-
 	</head>
+
 	<body class="is-preload">
 		<div id="page-wrapper">
 
@@ -84,9 +95,9 @@
 				</div>
 
 			<!-- Main -->
-				<section class="wrapper style1">
+				<section class="col-6 col-12-mobilep" style="align-items: center; width: 50%; margin-left: 25%; margin-top: 5%;">
 					<div class="container">
-						<div id="content">
+						<div class="row" id="content">
 
 							<!-- Content -->
 
@@ -96,13 +107,21 @@
 										<p>Upload a photo of the type of car you are searching to find a similar option that we have available.</p>
 									</header>
 								
-									<form class="form" id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
-										<div>
-											<input type="file" id="fileInput" name="image" />
+									<form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
+										<div class="row gtr-50">
+											<div class="col-6 col-12-mobilep">
+												<input type="file" id="fileInput" name="image" autocomplete="off"/>
+											</div>
+											<div class="col-12 col-12-mobilep">
+												<!-- You can customize the button text and styles here -->
+												<button type="submit" class="button alt col-12">Upload</button>
+											</div>
+											<div class="col-12">
+												<div id="result"></div>
+											</div>
 										</div>
-										<button type="submit" class="button alt">Upload</button>
 									</form>
-									<div id="result"></div>
+									
 								</article>
 
 						</div>
@@ -111,31 +130,6 @@
 
 			<!-- Footer -->
 				<div id="footer">
-					<div class="container">
-						<div class="row">
-							<section class="col-6 col-12-narrower">
-								<h3>Get In Touch</h3>
-								<form>
-									<div class="row gtr-50">
-										<div class="col-6 col-12-mobilep">
-											<input type="text" name="name" id="name" placeholder="Name" />
-										</div>
-										<div class="col-6 col-12-mobilep">
-											<input type="email" name="email" id="email" placeholder="Email" />
-										</div>
-										<div class="col-12">
-											<textarea name="message" id="message" placeholder="Message" rows="5"></textarea>
-										</div>
-										<div class="col-12">
-											<ul class="actions">
-												<li><input type="submit" class="button alt" value="Send Message" /></li>
-											</ul>
-										</div>
-									</div>
-								</form>
-							</section>
-						</div>
-					</div>
 
 					<!-- Icons -->
 						<ul class="icons">

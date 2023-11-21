@@ -17,7 +17,6 @@ const predictionKey = process.env["VISION_PREDICTION_KEY"];
 const predictionResourceId = process.env["VISION_PREDICTION_RESOURCE_ID"];
 const predictionEndpoint = process.env["VISION_PREDICTION_ENDPOINT"];
 const projectID = process.env["PROJECT_ID"];
-const ocpApimSubscriptionKey= process.env["OCP-APIM-SUBSCRIPTION-KEY"];
 
 const trainingCredentials = new msRest.ApiKeyCredentials({ inHeader: { "Training-key": trainingKey } });
 const predictionCredentials = new msRest.ApiKeyCredentials({ inHeader: { "Prediction-key": predictionKey } });
@@ -32,11 +31,31 @@ const server = express();
 server.use(cors());
 const upload = multer({ dest: 'uploads/' });
 
-var carImages = {
-    "sedan": "https://trademe.tmcdn.co.nz/photoserver/full/2066485865.jpg",
-    "SUV": "https://trademe.tmcdn.co.nz/photoserver/plus/2076202901.jpg",
-    "hatchback": "https://trademe.tmcdn.co.nz/photoserver/plus/2063636499.jpg",
-    "convertible": "https://trademe.tmcdn.co.nz/photoserver/full/2080526602.jpg"
+var predictionDetails = {
+    "sedan": {
+        imageUrl: "cars/2014-toyota-sai-23625781_17426966.jpg",
+        carTag: "Sedan - 2014 Toyota SAI",
+        url: "https://www.turners.co.nz/Cars/Used-Cars-for-Sale/toyota/sai/23625781",
+        comment: "Who is the one overpacking?"
+    },
+    "suv": {
+        imageUrl: "cars/2019-nissan-qashqai-23924142_17584165.jpg",
+        carTag: "SUV - 2019 Nissan Qashqai",
+        url: "https://www.turners.co.nz/Cars/Used-Cars-for-Sale/nissan/qashqai/23924142",
+        comment: "Family getting bigger?"
+    },
+    "hatchback": {
+        imageUrl: "cars/2018-mazda-demio-23633232_17363625_gallery.jpg",
+        carTag: "Hatchback - 2018 Mazda Demio",
+        url: "https://www.turners.co.nz/Cars/Used-Cars-for-Sale/mazda/demio/23633232",
+        comment: "Not great with parallel parking huh?"
+    },
+    "convertible": {
+        imageUrl: "cars/2006-bmw-z4-24477841_17977993.jpg",
+        carTag: "Convertible - 2006 BMW Z4",
+        url: "https://www.turners.co.nz/Cars/Used-Cars-for-Sale/bmw/z4/24477841",
+        comment: "Fancy-schmancy"
+    }
 };
 
 console.log("Script loaded");
@@ -52,6 +71,7 @@ server.post('/upload', upload.single('image'), async (req, res) => {
 
         const response = await fetch(process.env.VISION_PREDICTION_ENDPOINT, {
             method: 'POST',
+            mode: 'cors',
             body: formData,
             headers: {
                 'Prediction-Key': process.env.VISION_PREDICTION_KEY,
@@ -68,7 +88,6 @@ server.post('/upload', upload.single('image'), async (req, res) => {
     }
 });
 
-// Assuming you have an HTML element with id="result"
 function matchImageWithPrediction(prediction) {
     if (!prediction.predictions || prediction.predictions.length === 0) {
         console.error("No predictions found in the response.");
@@ -86,17 +105,21 @@ function matchImageWithPrediction(prediction) {
         return { error: "No 'tagName' found in the prediction" };
     }
 
-    // Check if the tagName is in your carImages
+    // Check if the tagName is in your predictionDetails
     const tagName = highestProbabilityPrediction.tagName.toLowerCase();
-    if (!carImages[tagName]) {
+    if (!predictionDetails[tagName]) {
         console.error(`No matching image found for tagName: ${tagName}`);
         return { error: `No matching image found for tagName: ${tagName}` };
     }
 
+    // Return the information associated with the car type
     return {
-        tagName: tagName,
-        imageUrl: carImages[tagName],
-        ...prediction
+        carType: tagName,
+        imageUrl: predictionDetails[tagName].imageUrl,
+        carTag: predictionDetails[tagName].carTag,
+        url: predictionDetails[tagName].url,
+        comment: predictionDetails[tagName].comment,
+        probability: highestProbabilityPrediction.probability,
     };
 }
 
