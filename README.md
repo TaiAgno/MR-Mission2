@@ -58,6 +58,8 @@ I understand that this code is rather extensive and confusing, and I wish for th
 
 Reviews of any kind will be highly appreciated.
 
+I suspect there are quite a few items which appear more than once in different places performing the same task. But I am unsure of what is working and were, thus why duplications might occur - aiming to review when possible.
+
 Please make a pull request and review the code adding your comments.
 
 ## Author
