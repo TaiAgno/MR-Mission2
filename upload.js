@@ -35,7 +35,7 @@ const predictor = new PredictionAPIClient(predictionCredentials, predictionEndpo
 
 const server = express();
 server.use(cors());
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({ storage: multer.memoryStorage() });
 
 //establishes server endpoint
 server.post('/upload', upload.single('image'), async (req, res) => {
