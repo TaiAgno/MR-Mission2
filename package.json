@@ -1,7 +1,7 @@
 {
   "name": "mr-mission2",
   "version": "1.0.0",
-  "description": "This project was developed to create an interface to provide a car value from two inputs, car model and car year.\r For that, it was used Express to emulate a server, JSON for parsing, Jest for testing and Postman for interface.\r TDD principles were applied, using the logic of red, green, refactor.",
+  "description": "Prototype of application to match image input of car with similar option using Custom Vision AI prediction.",
   "main": "upload.js",
   "type": "module",
   "scripts": {
