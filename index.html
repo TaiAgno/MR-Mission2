@@ -11,64 +11,11 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-		<script src="assets/js/jquery.min.js"></script>
 		<script src="assets/js/jquery.dropotron.min.js"></script>
 		<script src="assets/js/browser.min.js"></script>
 		<script src="assets/js/breakpoints.min.js"></script>
 		<script src="assets/js/util.js"></script>
 		<script src="assets/js/main.js"></script>
-
-	<script>
-        $(document).ready(function () {
-            console.log("upload.js loaded");
-
-            $("#uploadForm").submit(function (e) {
-                e.preventDefault();
-                console.log("Form submitted");
-
-                var file = $('#fileInput')[0].files[0];
-                console.log(file);
-
-                var formData = new FormData();
-                formData.append('image', file);
-
-
-
-                $.ajax({
-                    url: 'http://localhost:3000/upload',
-                    type: 'POST',
-                    data: formData,
-					success: function (data) {
-						console.log("Success! Received data:", data);
-						var carType = data.carType;
-						var imageUrl = data.imageUrl;
-						var carTag = data.carTag;
-						var url = data.url;
-						var comment = data.comment;
-						if (data.error) {
-							console.error("Error in response:", data.error);
-							$("result").html("Sorry, no matches were found.");
-						} else {
-							$("#result").html(`
-								<p>Match: ${carTag}
-								<br>Comment: ${comment}
-								<br>More info: <a href="${url}" target="_blank">${url}</a></p>
-								<p><img src="${imageUrl}" alt="${carType}"></p>
-								
-							`);
-						}
-					},
-
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        console.error("AJAX error: " + textStatus + ' : ' + errorThrown);
-                    }
-                });
-            });
-        });
-    </script>
 	</head>
 
 	<body class="is-preload">
@@ -147,5 +94,57 @@
 				</div>
 
 		</div>
+			<!-- AJAX setup to update the page with the returned values from the server/backend -->
+	<script>
+        $(document).ready(function () {
+            console.log("upload.js loaded");
+
+            $("#uploadForm").submit(function (e) {
+                e.preventDefault();
+                console.log("Form submitted");
+
+                var file = $('#fileInput')[0].files[0];
+                console.log(file);
+
+                var formData = new FormData();
+                formData.append('image', file);
+
+
+                $.ajax({
+                    url: 'http://localhost:3000/upload',
+                    type: 'POST',
+                    data: formData,
+					success: function (data) {
+						console.log("Success! Received data:", data);
+						var carType = data.carType;
+						var imageUrl = data.imageUrl;
+						var carTag = data.carTag;
+						var url = data.url;
+						var comment = data.comment;
+						if (data.error) {
+							console.error("Error in response:", data.error);
+							$("#result").html(comment);
+						} else {
+							$("#result").html(`
+								<p>Match: ${carTag}
+								<br>Comment: ${comment}
+								<br>More info: <a href="${url}" target="_blank">${url}</a></p>
+								<p><img src="${imageUrl}" alt="${carType}"></p>
+								
+							`);
+						}
+					},
+
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error("AJAX error: " + textStatus + ' : ' + errorThrown);
+                    }
+                });
+				return false;
+            });
+        });
+    </script>
 	</body>
 </html>
