@@ -11,8 +11,8 @@ The project has also made use of environment variables, keeping keys sensitive i
 For client side styling, it was used a template from https://html5up.net/
 
 SELF-DISCLAIMER
-This project would not have been possible without valuable suggestions on group colleagues, helping to resolve major blockers.
-I have relied extensively in insights from previous projects using PHP and AJAX, as well as copilot to help with function logic, requests and syntax.
+This project would not have been possible without valuable suggestions of group colleagues, helping to resolve major blockers.
+Aside from the Microsoft's documentation about Custom Vision, I have relied extensively in insights from previous projects using PHP and AJAX, as well as copilot to help with function logic, requests and syntax.
 I understand that this code is rather extensive and confusing, and I wish for the day I will have enough skills to bring Spring to all code smells contained in here.
 
 ## Getting Started
@@ -53,6 +53,8 @@ I understand that this code is rather extensive and confusing, and I wish for th
 ### Errors
 
 * When running the code on Live Server, the form will reset itself to initial state right after returning the values (most of the times user cannot even see the response). This is known - pending a solution.
+
+* Another issue detected: once it goes into responsive mode, client side loses entirely the heading/menu section - pending solution.
 
 ## Review
 
