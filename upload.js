@@ -15,7 +15,6 @@ import { TrainingAPIClient } from "@azure/cognitiveservices-customvision-trainin
 import { PredictionAPIClient } from "@azure/cognitiveservices-customvision-prediction";
 import { matchImageWithPrediction } from './matcher.js';
 
-// ... existing code ...
 //sets all required variables
 const PORT = process.env.PORT || 5500;
 const publishIterationName = "carMatcher";

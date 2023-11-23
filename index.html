@@ -64,7 +64,7 @@
 												<button type="submit" class="button alt col-12">Upload</button>
 											</div>
 											<div class="col-12">
-												<div id="result"></div>
+												<div id="result" style="font-weight: bold;"></div>
 											</div>
 										</div>
 									</form>
@@ -94,7 +94,8 @@
 				</div>
 
 		</div>
-			<!-- AJAX setup to update the page with the returned values from the server/backend -->
+
+	<!-- AJAX setup to update the page with the returned values from the server/backend -->
 	<script>
         $(document).ready(function () {
             console.log("upload.js loaded");
@@ -129,7 +130,7 @@
 								<p>Match: ${carTag}
 								<br>Comment: ${comment}
 								<br>More info: <a href="${url}" target="_blank">${url}</a></p>
-								<p><img src="${imageUrl}" alt="${carType}"></p>
+								<p><img src="${imageUrl}" alt="${carType}" style="width:100%; height:auto;"></p>
 								
 							`);
 						}

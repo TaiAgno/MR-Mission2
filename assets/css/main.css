@@ -3358,14 +3358,3 @@ input, select, textarea {
 			}
 
 	}
-
-	#result {
-		margin-top: 2em;
-	}
-	
-	#result img {
-		max-width: 100%;
-		height: auto;
-		display: block;
-		margin: 0 auto;
-	}

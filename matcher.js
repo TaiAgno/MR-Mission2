@@ -27,10 +27,14 @@ var predictionDetails = {
 };
 
 //matches the uploaded image with the highests probability from the prediction AI
+const NO_PREDICTIONS_FOUND = "No predictions found";
+const NO_MATCH_FOUND = "No match found";
+const NEGATIVE = "negative";
+
 export function matchImageWithPrediction(prediction) {
     if (!prediction.predictions || prediction.predictions.length === 0) {
-        console.error("No predictions found in the response.");
-        return { error: "No predictions found", comment: "Sorry, no match found" };
+        console.error(NO_PREDICTIONS_FOUND);
+        return { error: NO_PREDICTIONS_FOUND, comment: "Sorry, no match found." };
     }
 
     //find the prediction with the highest probability
@@ -40,8 +44,8 @@ export function matchImageWithPrediction(prediction) {
 
     //check if the tagName is within predictionDetails
     const tagName = highestProbabilityPrediction.tagName.toLowerCase();
-    if (tagName === "negative") {
-        return { error: "No match found", comment: "Sorry, no match found" };
+    if (tagName === NEGATIVE) {
+        return { error: NO_MATCH_FOUND, comment: "Sorry, we do not sell that." };
     } 
 
     //return the information associated with the matched car type
