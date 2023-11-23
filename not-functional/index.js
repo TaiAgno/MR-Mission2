@@ -1,4 +1,4 @@
-// index.js
+// server set up - entry point of the application
 import * as config from './config';
 import * as middleware from './middleware';
 import * as fileUpload from './fileUpload';

@@ -1,9 +1,9 @@
-// cognitiveServices.js
+// cognitive services configuration
 import msRest from '@azure/ms-rest-js';
 import { TrainingAPIClient } from "@azure/cognitiveservices-customvision-training";
 import { PredictionAPIClient } from "@azure/cognitiveservices-customvision-prediction";
 
-import * as config from './config';
+import * as config from '../config';
 
 const { trainingKey, trainingEndpoint, predictionKey, predictionEndpoint } = config;
 

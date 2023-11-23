@@ -1,4 +1,6 @@
-//creates an object with 4 possible properties to return to client side
+//prediction matcher
+
+//object with 4 possible tags/properties to return to client side
 var predictionDetails = {
     "sedan": {
         imageUrl: "cars/2014-toyota-sai-23625781_17426966.jpg",

@@ -8,7 +8,7 @@ export const PORT = process.env.PORT || 5500;
 export const publishIterationName = "carMatcher";
 export const setTimeoutPromise = util.promisify(setTimeout);
 
-//Azure Cognitive Services variables
+//azure cognitive services variables
 export const VISION_TRAINING_KEY = process.env.VISION_TRAINING_KEY;
 export const VISION_TRAINING_ENDPOINT = process.env.VISION_TRAINING_ENDPOINT;
 export const VISION_PREDICTION_KEY = process.env.VISION_PREDICTION_KEY;

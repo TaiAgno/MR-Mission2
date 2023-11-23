@@ -1,11 +1,11 @@
-// fileUpload.js
+// file upload implementation
 import fs from 'fs';
 import fetch from 'node-fetch';
 import FormData from 'form-data';
 
 import * as config from './config';
 import * as cognitiveServices from './cognitiveServices';
-import { matchImageWithPrediction } from './matcher';
+import { matchImageWithPrediction } from '../matcher';
 
 const { VISION_PREDICTION_ENDPOINT, VISION_PREDICTION_KEY } = config;
 const { server, upload } = middleware;
