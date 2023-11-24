@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'taim3'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B159D46CF77E4884BEDBB665246AA352 }}
+          publish-profile: ${{ secrets.COGNITIVE_SERVICES }}
           package: .
