@@ -59,6 +59,7 @@ server.post('/upload', upload.single('image'), async (req, res) => {
             body: formData,
             headers: {
                 'Prediction-Key': process.env.VISION_PREDICTION_KEY,
+                'Content-Type': 'application/octet-stream',
                 ...formData.getHeaders(),
             },
         });
