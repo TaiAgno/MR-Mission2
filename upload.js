@@ -33,7 +33,7 @@ const trainer = new TrainingAPIClient(trainingCredentials, trainingEndpoint);
 const predictor = new PredictionAPIClient(predictionCredentials, predictionEndpoint);
 
 const server = express();
-server.use(cors());
+server.use(cors({ origin: '*' }));
 const upload = multer({ dest: 'uploads/' });
 
 //establishes server endpoint
