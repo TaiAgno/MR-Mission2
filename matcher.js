@@ -1,6 +1,6 @@
-//prediction matcher
+// prediction matcher
 
-//object with 4 possible tags/properties to return to client side
+// object with 4 possible tags/properties to return to client side
 var predictionDetails = {
     "sedan": {
         imageUrl: "cars/2014-toyota-sai-23625781_17426966.jpg",
@@ -28,29 +28,29 @@ var predictionDetails = {
     }
 };
 
-//matches the uploaded image with the highests probability from the prediction AI
+// matches the uploaded image with the highest probability from the prediction AI
 const NO_PREDICTIONS_FOUND = "No predictions found";
 const NO_MATCH_FOUND = "No match found";
 const NEGATIVE = "negative";
 
-export function matchImageWithPrediction(prediction) {
+function matchImageWithPrediction(prediction) {
     if (!prediction.predictions || prediction.predictions.length === 0) {
         console.error(NO_PREDICTIONS_FOUND);
         return { error: NO_PREDICTIONS_FOUND, comment: "Sorry, no match found." };
     }
 
-    //find the prediction with the highest probability
+    // find the prediction with the highest probability
     const highestProbabilityPrediction = prediction.predictions.reduce((prev, current) => {
         return (prev.probability > current.probability) ? prev : current;
     });
 
-    //check if the tagName is within predictionDetails
+    // check if the tagName is within predictionDetails
     const tagName = highestProbabilityPrediction.tagName.toLowerCase();
     if (tagName === NEGATIVE) {
         return { error: NO_MATCH_FOUND, comment: "Sorry, we do not sell that." };
     } 
 
-    //return the information associated with the matched car type
+    // return the information associated with the matched car type
     return {
         carType: tagName,
         imageUrl: predictionDetails[tagName].imageUrl,
@@ -60,3 +60,5 @@ export function matchImageWithPrediction(prediction) {
         probability: highestProbabilityPrediction.probability,
     };
 }
+
+module.exports = { matchImageWithPrediction };

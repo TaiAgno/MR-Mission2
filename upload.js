@@ -1,21 +1,21 @@
-//impots all necessary packages and dependencies
-import dotenv from 'dotenv';
-import cors from 'cors';
-import util from 'util';
-import fs from 'fs';
-import msRest from '@azure/ms-rest-js';
-import fetch from 'node-fetch';
-import express from 'express';
-import multer from 'multer';
-import FormData from 'form-data';
+// imports all necessary packages and dependencies
+const dotenv = require('dotenv');
+const cors = require('cors');
+const util = require('util');
+const fs = require('fs');
+const msRest = require('@azure/ms-rest-js');
+const fetch = require('node-fetch');
+const express = require('express');
+const multer = require('multer');
+const FormData = require('form-data');
 
 dotenv.config();
 
-import { TrainingAPIClient } from "@azure/cognitiveservices-customvision-training";
-import { PredictionAPIClient } from "@azure/cognitiveservices-customvision-prediction";
-import { matchImageWithPrediction } from './matcher.js';
+const { TrainingAPIClient } = require("@azure/cognitiveservices-customvision-training");
+const { PredictionAPIClient } = require("@azure/cognitiveservices-customvision-prediction");
+const { matchImageWithPrediction } = require('./matcher.js');
 
-//sets all required variables - TODO: TRANSFER TO A SEPARATE FILE!
+// sets all required variables
 const PORT = process.env.PORT || 5500;
 const publishIterationName = "carMatcher";
 const setTimeoutPromise = util.promisify(setTimeout);
@@ -40,21 +40,21 @@ server.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
-  });
+});
 
-//establishes server endpoint
+// establishes server endpoint
 server.post('/upload', upload.single('image'), async (req, res) => {
     if (!req.file) {
         return res.status(400).send('No file was uploaded.');
     }
 
-    //check if the uploaded file is an image
+    // check if the uploaded file is an image
     if (!req.file.mimetype.startsWith('image/')) {
         console.error("Uploaded file is not an image.");
         return res.json({ error: "Incorrect data type", comment: "Please upload an image" });
     }
 
-    //uploads and processes the image on the server side/custom vision
+    // uploads and processes the image on the server side/custom vision
     try {
         const formData = new FormData();
         formData.append('image', fs.createReadStream(req.file.path));

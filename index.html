@@ -111,9 +111,9 @@
                 var formData = new FormData();
                 formData.append('image', file);
 
-
+// when testing locally, use 
                 $.ajax({
-                    url: 'https://taim3.azurewebsites.net/upload',
+                    url: 'http://localhost:3000/upload',
                     type: 'POST',
                     data: formData,
 					success: function (data) {

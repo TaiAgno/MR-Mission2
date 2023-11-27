@@ -23,6 +23,7 @@ I wish for the day I will have enough skills to bring Spring to all code smells 
 * Express
 * Multer
 * Node
+* Node Fetch 2.6.6 - so it is compatible with CommonJS, as Azure App Services apparently does not support ES6 imports  
 * ES Modules
 * Custom Vision
 * Dotenv
@@ -35,7 +36,7 @@ I wish for the day I will have enough skills to bring Spring to all code smells 
 * npm install @azure/cognitiveservices-customvision-prediction
 * npm install @azure/ms-rest-js
 * npm install dotenv
-* npm install node-fetch
+* npm install node-fetch@2.6.6
 * npm install esm
 * npm install cors
 
