@@ -112,6 +112,7 @@
                 formData.append('image', file);
 
 				// when testing locally, use http://localhost:3000/upload
+				// on deployment use https://taim3.azurewebsites.net/upload
                 $.ajax({
                     url: 'https://taim3.azurewebsites.net/upload',
                     type: 'POST',
