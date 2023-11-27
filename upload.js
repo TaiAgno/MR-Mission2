@@ -4,7 +4,7 @@ const cors = require('cors');
 const util = require('util');
 const fs = require('fs');
 const msRest = require('@azure/ms-rest-js');
-const fetch = require('node-fetch');
+const axios = require('axios');
 const express = require('express');
 const multer = require('multer');
 const FormData = require('form-data');
@@ -58,18 +58,15 @@ server.post('/upload', upload.single('image'), async (req, res) => {
     try {
         const formData = new FormData();
         formData.append('image', fs.createReadStream(req.file.path));
-
-        const response = await fetch(process.env.VISION_PREDICTION_ENDPOINT, {
-            method: 'POST',
-            mode: 'cors',
-            body: formData,
+    
+        const response = await axios.post(process.env.VISION_PREDICTION_ENDPOINT, formData, {
             headers: {
                 'Prediction-Key': process.env.VISION_PREDICTION_KEY,
                 ...formData.getHeaders(),
             },
         });
-
-        const responseData = await response.json();
+    
+        const responseData = response.data;
         const matchedImage = matchImageWithPrediction(responseData);
         res.json(matchedImage);
     } catch (error) {
