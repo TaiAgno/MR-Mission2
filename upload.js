@@ -34,13 +34,14 @@ const predictor = new PredictionAPIClient(predictionCredentials, predictionEndpo
 
 const server = express();
 server.use(cors({ origin: '*' }));
-const upload = multer({ dest: 'uploads/' });
 
 server.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
 });
+
+const upload = multer({ dest: 'uploads/' });
 
 // establishes server endpoint
 server.post('/upload', upload.single('image'), async (req, res) => {
