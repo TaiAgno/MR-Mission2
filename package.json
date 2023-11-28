@@ -4,7 +4,7 @@
   "description": "Prototype of application to match image input of car with similar option using Custom Vision AI prediction.",
   "main": "upload.js",
   "scripts": {
-    "start": "upload.js",
+    "start": "node upload.js",
     "dev": "nodemon upload.js",
     "test": "jest"
   },
